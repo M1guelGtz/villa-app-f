@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+html, body, #root {
+	height: 100%;
+}
+
+body {
+	font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+@layer components{
+	.login-section {
+		@apply rounded-2xl w-1/3 border;
+	}
+	.flex-box {
+		@apply flex w-full h-full;
+	}
+	.test {
+		@apply border border-red-500 bg-orange-400;
+	}
+}
+
