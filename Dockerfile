@@ -10,8 +10,8 @@ RUN npm install -g pnpm@9
 # Copy package manifests first to leverage Docker cache
 COPY package.json pnpm-lock.yaml ./
 
-# Install dependencies
-RUN pnpm install --frozen-lockfile
+# Install dependencies (allow updating lockfile if package.json changed)
+RUN pnpm install --no-frozen-lockfile
 
 # Copy rest of the source
 COPY . .
@@ -29,7 +29,7 @@ COPY --from=build /app/dist ./dist
 
 # Copy server and package files to run the static server
 COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm@9 && pnpm install --prod --frozen-lockfile
+RUN npm install -g pnpm@9 && pnpm install --prod --no-frozen-lockfile
 COPY server.js ./
 
 EXPOSE 80
