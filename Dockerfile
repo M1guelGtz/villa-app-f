@@ -4,8 +4,8 @@ FROM node:18-alpine AS build
 
 WORKDIR /app
 
-# Install pnpm
-RUN npm install -g pnpm@8
+# Install pnpm (v9 matches pnpm-lock.yaml lockfileVersion: '9.0')
+RUN npm install -g pnpm@9
 
 # Copy package manifests first to leverage Docker cache
 COPY package.json pnpm-lock.yaml ./
@@ -29,7 +29,7 @@ COPY --from=build /app/dist ./dist
 
 # Copy server and package files to run the static server
 COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm@8 && pnpm install --prod --frozen-lockfile
+RUN npm install -g pnpm@9 && pnpm install --prod --frozen-lockfile
 COPY server.js ./
 
 EXPOSE 80
