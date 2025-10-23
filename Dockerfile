@@ -29,7 +29,7 @@ COPY --from=build /app/dist ./dist
 
 # Copy server and package files to run the static server
 COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm@9 && pnpm install --prod --no-frozen-lockfile
+RUN npm install -g pnpm@9 && pnpm install
 COPY server.js ./
 
 EXPOSE 80
