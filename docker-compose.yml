@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  villa-app:
+    build: .
+    image: villa-app:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      - API_URL=${API_URL}
+    # If you prefer to map to a different port on host, change left side e.g. 3000:80
+    # volumes: # optional: mount for local dev
+    #   - ./:/app
