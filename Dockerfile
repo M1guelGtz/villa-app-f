@@ -21,5 +21,5 @@ RUN npm run build
 # Exponer el puerto 3000
 EXPOSE 3000
 
-# Servir la aplicación con serve
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Servir la aplicación con serve (Vite usa 'dist' por defecto)
+CMD ["serve", "-s", "dist", "-l", "3000"]
