@@ -1,9 +1,0 @@
-services:
-  villa-app:
-    volumes:
-      - ./:/app
-    environment:
-      - NODE_ENV=development
-    command: pnpm run dev
-    ports:
-      - "5173:5173"

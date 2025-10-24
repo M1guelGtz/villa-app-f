@@ -1,12 +1,11 @@
+version: '3.8'
+
 services:
-  villa-app:
+  web:
     build: .
-    image: villa-app:latest
-    restart: unless-stopped
+    container_name: mi-app-react
     ports:
-      - "80:80"
+      - "80:3000"
+    restart: unless-stopped
     environment:
-      - API_URL=${API_URL}
-    # If you prefer to map to a different port on host, change left side e.g. 3000:80
-    # volumes: # optional: mount for local dev
-    #   - ./:/app
+      - NODE_ENV=production

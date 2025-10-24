@@ -1,37 +1,23 @@
-# Multi-stage Dockerfile for Vite + React app
-# Build stage
-FROM node:18-alpine AS build
+# Usar Node.js como base
+FROM node:18-alpine
 
 WORKDIR /app
 
-# Install pnpm (v9 matches pnpm-lock.yaml lockfileVersion: '9.0')
-RUN npm install -g pnpm@9
+# Copiar archivos de dependencias
+COPY package*.json ./
 
-# Copy package manifests first to leverage Docker cache
-COPY package.json pnpm-lock.yaml ./
+# Instalar dependencias de producción y serve
+RUN npm install --production
+RUN npm install -g serve
 
-# Install dependencies (allow updating lockfile if package.json changed)
-RUN pnpm install
-
-# Copy rest of the source
+# Copiar el resto de la aplicación
 COPY . .
 
-# Build the app (produces /app/dist)
-RUN pnpm run build
+# Construir la aplicación para producción
+RUN npm run build
 
-# Production stage: run a small Node server to serve static files
-FROM node:18-alpine AS prod
+# Exponer el puerto 3000
+EXPOSE 3000
 
-WORKDIR /app
-
-# Copy built assets
-COPY --from=build /app/dist ./dist
-
-# Copy server and package files to run the static server
-COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm@9 && pnpm install
-COPY server.js ./
-
-EXPOSE 80
-
-CMD ["node", "server.js"]
+# Servir la aplicación con serve
+CMD ["serve", "-s", "build", "-l", "3000"]
