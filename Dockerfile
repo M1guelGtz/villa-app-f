@@ -1,13 +1,15 @@
-# Usar Node.js como base
-FROM node:18-alpine
+# Usar Node.js 20 (requerido por Vite)
+FROM node:20-alpine
 
 WORKDIR /app
 
 # Copiar archivos de dependencias
 COPY package*.json ./
 
-# Instalar dependencias de producción y serve
-RUN npm install --production
+# Instalar TODAS las dependencias (necesarias para el build)
+RUN npm install
+
+# Instalar serve globalmente
 RUN npm install -g serve
 
 # Copiar el resto de la aplicación
