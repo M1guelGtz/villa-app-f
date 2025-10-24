@@ -15,6 +15,16 @@ RUN npm install -g serve
 # Copiar el resto de la aplicación
 COPY . .
 
+# Argumentos de build para variables de entorno
+ARG VITE_API_URL
+ARG VITE_API_KEY
+# Agrega más ARG según tus variables
+
+# Variables de entorno disponibles durante el build
+ENV VITE_API_URL=$VITE_API_URL
+ENV VITE_API_KEY=$VITE_API_KEY
+# Agrega más ENV según tus variables
+
 # Construir la aplicación para producción
 RUN npm run build
 
